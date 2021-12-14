@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load Data and Show data in UI</title>
+    <style>
+        body {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        ul li {
+            list-style-type: upper-alpha;
+        }
+    </style>
+</head>
+<body>
+    
+    <script>
+        //promise
+
+        fetch('https://aqueous-peak-84384.herokuapp.com/SC3')
+        .then(respose => respose.json())
+        .then(data => showUI(data))
+        .catch(error => console.log(error));
+
+        function showUI(data){
+            const Questions = data.map( data => data);
+            for (let i = 0; i < data.length; i++) {
+                const {question, incorrect_answers, correct_answer} = data[i];
+                const answer = [...incorrect_answers, correct_answer];
+                var randomAnswer = answer.sort(() => Math.random() - 0.5);
+                const div = document.createElement('div');
+                div.innerHTML = `<div>
+                    <h4>${i+1}. ${question}</h4>
+                        <ul>
+                            <li>${randomAnswer[0]}</li>
+                            <li>${randomAnswer[1]}</li>
+                            <li>${randomAnswer[2]}</li>
+                            <li>${randomAnswer[3]}</li>
+                    </div>`;
+                document.querySelector('body').appendChild(div);
+            }
+        }
+    </script>
+</body>
+</html>

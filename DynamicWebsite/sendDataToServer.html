@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Data to Sever From UI</title>
+    <style>
+        body {
+            width: 60%;
+            margin: 0 auto;
+        }
+        input {
+            width: 50%;
+            display: block;
+           
+            margin: 10px;
+            padding: 2px;
+            font-size: 1.3em;
+        }
+        button {
+            margin-left: 10px;
+            font-size: 1.3em;
+            width: 30%;
+            background-color: coral;
+            padding: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="title" placeholder="Title">
+    <input type="text" id="body" placeholder="body">
+
+    <button id="submit">Submit</button>
+    <script>
+        document.getElementById('submit').addEventListener('click', function() {
+            const title = document.querySelector('#title').value;
+            const body = document.querySelector('#body').value;
+            const data = {title: title, body: body};
+            postToServer(data);
+        })
+        function postToServer(senddata) {
+            fetch('https://jsonplaceholder.typicode.com/posts', {
+                method: 'POST',
+                body: JSON.stringify(senddata),
+                headers: {
+                    "Content-type": "application/json;charset=UTF-8"
+                }
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+        }
+    </script>
+</body>
+</html>
