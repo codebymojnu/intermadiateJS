@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather API</title>
+    <style>
+        body {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: blue;
+            text-align: center;
+        }
+        input {
+            font-size: 1.3em;
+            padding: 1%;
+        }
+
+        button {
+            width: 10%;
+            font-size: 1.3em;
+            margin-top: 40px;
+            background-color: #019CD4;
+            color: white;
+            cursor: pointer;
+            padding: 1%;
+        }
+
+        div {
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+        .showWeather {
+            width: 350px;
+            background-color: #036133;
+            color: white;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Check Weather in Your City</h1>
+    <input type="text" placeholder="City Name Ex: Dhaka" id="userInput">
+    <button id="search">Search</button>
+    <div id="weather">
+        
+    </div>
+    <script>
+        const apiKey = 'b766a17de210cde296277b9d69f97893';
+
+        //click button take user input
+        document.getElementById('search').addEventListener('click', function () {
+            const city = document.getElementById('userInput').value;
+            callAPI(city);
+            clearInput();
+        })
+
+        //hit enter button and take user input
+        document.querySelector('#userInput').addEventListener('keyup', function (event) {
+            const cityname = document.getElementById('userInput').value;
+            if (event.keyCode == 13) {
+                callAPI(cityname);
+                clearInput();
+            }
+        })
+
+        //api call
+        function callAPI(city) {
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=b766a17de210cde296277b9d69f97893`)
+                .then(response => response.json())
+                .then(data => showUI(data))
+        }
+
+        //data show on UI
+        function showUI(data) {
+            console.log(data);
+
+            const temperature = data.main.temp - 273.15;
+            const max_temp = data.main.temp_max - 273.15;
+            const min_temp = data.main.temp_min - 273.15;
+            const windSpeed = data.wind.speed;
+            
+            const maxTemp = max_temp.toFixed(2);
+            const minTemp = min_temp.toFixed(2);
+            const temp = temperature.toFixed(2);
+
+            document.getElementById('weather').innerHTML = `<div class="showWeather">
+                    <p style="text-align: center; border-bottom: 1px solid black; padding-bottom: 8px;">${data.weather[0].main} in ${data.name}</p>
+                    <p>Country: ${data.sys.country}</p>
+                    <p>Temperature: ${temp}°C</p>
+                    <p>Max Temp: ${maxTemp}°C</p>
+                    <p>Min Temp: ${minTemp}°C</p>
+                    <p>Wind Speed: ${windSpeed}</p>
+                </div>`;
+        }
+
+        //clear Input
+        function clearInput(){
+            document.getElementById('userInput').value = '';
+        }
+    </script>
+</body>
+
+</html>

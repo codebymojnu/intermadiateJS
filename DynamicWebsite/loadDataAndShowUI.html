@@ -26,7 +26,7 @@
         .catch(error => console.log(error));
 
         function showUI(data){
-            const Questions = data.map( data => data);
+            //const Questions = data.map( data => data);
             for (let i = 0; i < data.length; i++) {
                 const {question, incorrect_answers, correct_answer} = data[i];
                 const answer = [...incorrect_answers, correct_answer];

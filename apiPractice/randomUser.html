@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random User</title>
+    <style>
+        .text-center {
+            text-align: center;
+        }
+        .margin-top-150 {
+            margin-top: 80px;
+        }
+        div {
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+<body>
+    
+    <script>
+        function fetchData() {
+            fetch('https://randomuser.me/api/')
+            .then(response => response.json())
+            .then(data => showDataUI(data.results[0]))
+        }
+        function showDataUI(data) {
+            console.log(data);
+            const name = data.name.title + " " + data.name.first + " " + data.name.last;
+            const img = data.picture.large;
+            document.querySelector('body').innerHTML = `<div class="text-center margin-top-150">
+                    <p>Hi my name is,</p>
+                    <h3>${name}</h3>
+                    <img src="${img}" alt="${name}"/>
+                    <p><small>${data.email}</small></p>
+                </div>`;
+        }
+        fetchData();
+    </script>
+</body>
+</html>

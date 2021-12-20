@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visit us When you feel bor</title>
+    <style>
+        div {
+            text-align: center;
+        }
+
+        h3 {
+            color: blue;
+        }
+
+        span {
+            color: red;
+        }
+
+        h2 {
+            border-bottom: 2px solid rebeccapurple;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Visit Us- When you feel bore</h1>
+    <h2>And Follow our instructions</h2>
+    <div>
+        <h3>Do that now >> <span id="activity"></span></h3>
+        <span id="link"></span>
+    </div>
+    <script>
+        function doSomething() {
+            fetch('https://www.boredapi.com/api/activity')
+                .then(response => response.json())
+                .then(data => showUI(data))
+        }
+
+        function showUI(boreData) {
+            document.getElementById('activity').innerText = `${boreData.activity}`;
+            document.getElementById('link').innerHTML = `<a href="${boreData.link}>${boreData.link}</a>`;
+            // setInterval(() => {
+            //     document.getElementById('activity').innerText = ' ';
+            //     document.getElementById('link').innerText = ' ';
+            //     doSomething();
+            // }, 15000);
+        }
+
+        doSomething();
+    </script>
+</body>
+
+</html>
